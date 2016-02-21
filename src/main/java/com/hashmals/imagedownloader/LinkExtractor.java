@@ -1,7 +1,6 @@
 package com.hashmals.imagedownloader;
 
 import org.jsoup.Jsoup;
-import org.jsoup.helper.Validate;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -16,9 +15,7 @@ import java.net.URL;
  */
 public class LinkExtractor {
 
-    public static void main(String[] args) throws IOException {
-        Validate.isTrue(args.length == 1, "usage: supply url to fetch");
-        String url = args[0];
+    public LinkExtractor(String url) throws IOException {
         print("Fetching %s...", url);
 
         Document doc = Jsoup.connect(url).get();
@@ -36,7 +33,7 @@ public class LinkExtractor {
         System.out.println(String.format(msg, args));
     }
 
-    private static void save(String source, String name, String folder) throws MalformedURLException, IOException, FileNotFoundException {
+    private static void save(String source, String name, String folder) throws IOException {
         URL url = new URL(source);
         InputStream in = new BufferedInputStream(url.openStream());
         OutputStream out = new BufferedOutputStream(new FileOutputStream(folder + "\\" + name + ".jpg"));
