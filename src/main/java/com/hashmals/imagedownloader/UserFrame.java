@@ -2,6 +2,11 @@ package com.hashmals.imagedownloader;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by HashmalS on 21.02.2016.
@@ -10,6 +15,10 @@ import java.awt.*;
 public class UserFrame extends JFrame {
     private JPanel searchPanel;
     private JSplitPane splitPane;
+    private LinkExtractor extractor;
+    private JButton button;
+    private JScrollPane listScrollPane;
+    private Logger log;
 
     public UserFrame() {
         super("4chan Thread Image Downloader");
@@ -18,8 +27,27 @@ public class UserFrame extends JFrame {
         searchPanel = new SearchPanel();
         getContentPane().add(searchPanel).setVisible(true);
 
-        JList listScroll = new JList();
-        JScrollPane listScrollPane = new JScrollPane(listScroll);
+        listScrollPane = new JScrollPane();
+
+        button = SearchPanel.getSearchButton();
+
+        button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+                try {
+                    extractor = new LinkExtractor( SearchPanel.getLinkField().getText());
+                }
+                catch (IOException ex) {
+                    log.log(Level.SEVERE, ex.getMessage());
+                }
+                JList list = extractor.getList();
+                listScrollPane = new JScrollPane(list);
+                listScrollPane.repaint();
+                listScrollPane.revalidate();
+            }
+        });
+
+
         listScrollPane.setPreferredSize(new Dimension(100, 300));
 
         JScrollPane imageScrollPane = new JScrollPane();

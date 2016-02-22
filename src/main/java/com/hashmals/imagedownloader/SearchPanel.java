@@ -2,6 +2,8 @@ package com.hashmals.imagedownloader;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by HashmalS on 21.02.2016.
@@ -29,5 +31,13 @@ public class SearchPanel extends JPanel {
         Icon searchIcon = new ImageIcon("src/main/resources/Images/5-search-icon.png");
         searchButton.setIcon(searchIcon);
         add(searchButton);
+    }
+
+    public static JTextField getLinkField() {
+        return linkField;
+    }
+
+    public static JButton getSearchButton() {
+        return searchButton;
     }
 }
